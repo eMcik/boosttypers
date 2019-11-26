@@ -2,6 +2,8 @@
 
 namespace App\Command;
 
+use App\Entity\Gallery;
+use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -17,6 +19,16 @@ class BtsImportGalleriesCommand extends Command
      * @var Client
      */
     private $client;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
+
+    public function __construct(string $name = null, EntityManagerInterface $entityManager)
+    {
+        parent::__construct($name);
+        $this->entityManager = $entityManager;
+    }
 
     protected function configure()
     {
@@ -45,12 +57,22 @@ class BtsImportGalleriesCommand extends Command
 
         $links = $crawler->filter('div#content a[href*=looping]');
         foreach ($links as $x => $link) {
-            $io->note(str_replace(["\r", "\n", "\r\n"], '', preg_replace('/\s+/', ' ', $link->textContent)));
-            $io->note($link->getAttribute('href'));
             if ($x === $limit) {
                 break;
             }
+            $galleryName = str_replace(["\r", "\n", "\r\n"], '', preg_replace('/\s+/', ' ', $link->textContent));
+            $io->note($galleryName);
+            $galleryUri = $link->getAttribute('href');
+            $io->note($galleryUri);
+
+            $gallery = new Gallery();
+            $gallery->setName($galleryName);
+            $gallery->setSourceUri($galleryUri);
+
+            $this->entityManager->persist($gallery);
         }
+
+        $this->entityManager->flush();
 
         return 0;
     }
