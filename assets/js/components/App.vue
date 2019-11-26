@@ -2,7 +2,6 @@
   <div>
     <h2 class="center">My Application</h2>
     <div v-text="message"></div>
-    {{ message }}
     <ul>
       <li :key="word.id" v-for="word in words">{{ word }}</li>
     </ul>
@@ -13,7 +12,7 @@
   export default {
     data() {
       return {
-        message: "A list of words",
+        message: "A list of galleries",
         words: []
       };
     },

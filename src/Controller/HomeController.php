@@ -2,21 +2,25 @@
 
 namespace App\Controller;
 
+use App\Repository\GalleryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
+     * @param GalleryRepository $galleryRepository
+     *
+     * @return Response
      */
-    public function index()
+    public function index(GalleryRepository $galleryRepository): Response
     {
-        $words = ['sky', 'cloud', 'wood', 'rock', 'forest',
-            'mountain', 'breeze'];
+        $galleries = $galleryRepository->findAll();
 
         return $this->render('home/index.html.twig', [
-            'words' => $words
+            'galleries' => $galleries
         ]);
     }
 }

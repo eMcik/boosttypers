@@ -1,14 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home page{% endblock %}
+{% block title %}Deers gallery{% endblock %}
 
 {% block body %}
-
-    <div ref="words" data-words="{{ words|join(',') }}">
-
-    </div>
-
-    <div id="app">
-        <app></app>
+    <h3>Deers Galleries</h3>
+    <div>
+        <ul>
+        {% for gallery in galleries %}
+            <li><a href="{{ path('gallery', {id: gallery.id}) }}">{{ gallery.name }}</a></li>
+        {% endfor %}
+        </ul>
     </div>
 {% endblock %}
