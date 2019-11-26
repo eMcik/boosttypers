@@ -33,7 +33,7 @@ class BtsImportGalleriesCommand extends Command
     protected function configure()
     {
         $this
-            ->setDescription('Add a short description for your command')
+            ->setDescription('Imports photo galleries from whatchthedeer.com')
             ->addArgument('limit', InputArgument::OPTIONAL, 'Argument description', 20);
     }
 
@@ -55,14 +55,14 @@ class BtsImportGalleriesCommand extends Command
         $html = $response->getBody()->getContents();
         $crawler = new Crawler($html);
 
-        $links = $crawler->filter('div#content a[href*=looping]');
+        $links = $crawler->filter('div#content a[href*=viewer]');
         foreach ($links as $x => $link) {
             if ($x === $limit) {
                 break;
             }
             $galleryName = str_replace(["\r", "\n", "\r\n"], '', preg_replace('/\s+/', ' ', $link->textContent));
             $io->note($galleryName);
-            $galleryUri = $link->getAttribute('href');
+            $galleryUri = str_replace('../', '', $link->getAttribute('href'));
             $io->note($galleryUri);
 
             $gallery = new Gallery();
