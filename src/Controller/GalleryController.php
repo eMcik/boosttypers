@@ -20,7 +20,7 @@ class GalleryController extends AbstractController
     {
         $gallery = $galleryRepository->find($id);
 
-        return $this->render('home/gallery.html.twig', [
+        return $this->render('gallery.html.twig', [
             'gallery' => $gallery
         ]);
     }

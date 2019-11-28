@@ -19,7 +19,7 @@ class HomeController extends AbstractController
     {
         $galleries = $galleryRepository->findAll();
 
-        return $this->render('home/index.html.twig', [
+        return $this->render('homepage.html.twig', [
             'galleries' => $galleries
         ]);
     }

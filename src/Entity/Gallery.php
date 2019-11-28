@@ -64,9 +64,9 @@ class Gallery
     }
 
     /**
-     * @return Collection|GalleryPhoto[]
+     * @return Collection|GalleryPhoto[]|null
      */
-    public function getGalleryPhotos(): Collection
+    public function getGalleryPhotos(): ?Collection
     {
         return $this->photos;
     }

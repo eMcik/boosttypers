@@ -28,6 +28,7 @@ class GalleryPhoto
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Gallery", inversedBy="photos")
+     * @ORM\JoinColumn(name="gallery_id", referencedColumnName="id")
      */
     private $gallery;
 

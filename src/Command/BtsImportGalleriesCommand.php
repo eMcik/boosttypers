@@ -14,7 +14,7 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class BtsImportGalleriesCommand extends Command
 {
-    protected static $defaultName = 'bts:import:galleries';
+    protected static $defaultName = 'bts:gallery:import';
     /**
      * @var Client
      */
@@ -62,7 +62,7 @@ class BtsImportGalleriesCommand extends Command
             }
             $galleryName = str_replace(["\r", "\n", "\r\n"], '', preg_replace('/\s+/', ' ', $link->textContent));
             $io->note($galleryName);
-            $galleryUri = str_replace('../', '', $link->getAttribute('href'));
+            $galleryUri = 'http://www.watchthedeer.com/'. str_replace(['../', 'viewer.aspx'], '', $link->getAttribute('href'));
             $io->note($galleryUri);
 
             $gallery = new Gallery();

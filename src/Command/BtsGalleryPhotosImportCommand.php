@@ -63,7 +63,7 @@ class BtsGalleryPhotosImportCommand extends Command
 
         foreach ($galleries as $gallery) {
             $io->note('Trying to import photos to `'.$gallery->getName().'` gallery');
-            $response = $this->client->get($gallery->getSourceUri());
+            $response = $this->client->get(str_replace('http://www.watchthedeer.com', '', $gallery->getSourceUri()).'viewer.aspx');
             $html = $response->getBody()->getContents();
             $crawler = new Crawler($html);
             $script = $crawler->filter('head script[language=javascript]');
