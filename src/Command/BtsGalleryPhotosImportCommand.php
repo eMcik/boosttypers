@@ -68,7 +68,7 @@ class BtsGalleryPhotosImportCommand extends Command
             $crawler = new Crawler($html);
             $script = $crawler->filter('head script[language=javascript]');
             $photosListString = $script->first()->html();
-            preg_match_all('/([A-z0-9]*\.jpg)/', $photosListString, $images);
+            preg_match_all('/([-A-z0-9]*\.jpg)/i', $photosListString, $images);
             if (!empty($photosUris = $images[0])) {
                 foreach ($photosUris as $photoUri) {
                     $galleryPhoto = new GalleryPhoto();

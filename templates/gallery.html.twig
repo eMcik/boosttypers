@@ -7,7 +7,7 @@
     <div>
         <ul>
             {% for photo in gallery.galleryPhotos %}
-                <img src="{{ gallery.sourceUri ~ photo.photoUri }}">
+                <img src="{{ gallery.sourceUri ~ photo.photoUri }}" style="width: 30%;">
             {% endfor %}
         </ul>
     </div>

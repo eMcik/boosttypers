@@ -2,9 +2,9 @@
 
 ## How to start
 
-- run `docker-compose up -d`
-
 - run `docker run --rm --interactive --tty --user $(id -u):$(id -g) --volume $PWD:/app --volume /tmp:/tmp composer install`
+
+- run `docker-compose up -d`
 
 - run `docker-compose exec php-fpm php bin/console doctrine:migrations:migrate`
 

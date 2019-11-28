@@ -5,9 +5,14 @@
 {% block body %}
     <h3>Deers Galleries</h3>
     <div>
+        <a href="{{ path('home') }}">Reset sorting</a>
+        <a href="{{ path('home', {'order': 'ASC'}) }}">Sort ASC</a>
+        <a href="{{ path('home', {'order': 'DESC'}) }}">Sort DESC</a>
+    </div>
+    <div>
         <ul>
         {% for gallery in galleries %}
-            <li><a href="{{ path('gallery', {id: gallery.id}) }}">{{ gallery.name }}</a></li>
+            <li><a href="{{ path('gallery', {id: gallery.id}) }}">{{ gallery.name }}</a> {{ gallery.galleryPhotos|length }}</li>
         {% endfor %}
         </ul>
     </div>

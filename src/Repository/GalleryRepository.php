@@ -18,4 +18,14 @@ class GalleryRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Gallery::class);
     }
+
+    public function findAllSortedByPhotosCount(string $order): iterable
+    {
+        $qb = $this->createQueryBuilder('gallery');
+        $qb->leftJoin('gallery.photos', 'photos');
+        $qb->groupBy('gallery.id');
+        $qb->orderBy('COUNT(photos.id)', $order);
+
+        return $qb->getQuery()->execute();
+    }
 }
