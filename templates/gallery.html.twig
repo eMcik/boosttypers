@@ -1,14 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Deers gallery - {{ gallery.name }}{% endblock %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('bundles/whiteoctoberpagerfanta/css/pagerfantaDefault.css') }}" type="text/css" media="all" />
+{% endblock %}
 
 {% block body %}
+    <div><a href="{{ path('home') }}">Back to Home page</a></div>
     <h3>{{ gallery.name }}</h3>
     <div>
-        <ul>
-            {% for photo in gallery.galleryPhotos %}
+        <div>
+            {% for photo in photos_pager.currentPageResults %}
                 <img src="{{ gallery.sourceUri ~ photo.photoUri }}" style="width: 30%;">
             {% endfor %}
-        </ul>
+        </div>
+        <div class="pagerfanta">
+            {{ pagerfanta(photos_pager, { 'omitFirstPage': true }) }}
+        </div>
     </div>
 {% endblock %}
