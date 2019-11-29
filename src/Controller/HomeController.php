@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Repository\GalleryRepository;
@@ -18,7 +20,7 @@ class HomeController extends AbstractController
      *
      * @return Response
      */
-    public function index(GalleryRepository $galleryRepository, ?string $order = null): Response
+    public function index(GalleryRepository $galleryRepository, ?string $order = ''): Response
     {
         if (in_array(strtoupper($order), ['ASC', 'DESC'])) {
             $galleries = $galleryRepository->findAllSortedByPhotosCount(strtoupper($order));

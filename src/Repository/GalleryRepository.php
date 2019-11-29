@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Repository;
 
 use App\Entity\Gallery;
@@ -17,6 +19,12 @@ class GalleryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Gallery::class);
+    }
+
+    public function findAllAsArray(): iterable
+    {
+        return $this->createQueryBuilder('gallery')
+            ->getQuery()->getArrayResult();
     }
 
     public function findAllSortedByPhotosCount(string $order): iterable
