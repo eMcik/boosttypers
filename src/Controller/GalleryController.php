@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\Gallery;
 use App\Repository\GalleryPhotoRepository;
 use App\Repository\GalleryRepository;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
@@ -33,9 +34,13 @@ class GalleryController extends AbstractController
     ): Response {
         $gallery = $galleryRepository->find($id);
 
+        if (!$gallery instanceof Gallery) {
+            throw $this->createNotFoundException('Gallery not found');
+        }
+
         $galleryPhotoQueryBuilder = $galleryPhotoRepository->createQueryBuilder('gallery_photo');
         $galleryPhotoQueryBuilder->where('gallery_photo.gallery = :gallery');
-        $galleryPhotoQueryBuilder->setParameter('gallery', $gallery->getId());
+        $galleryPhotoQueryBuilder->setParameter('gallery', $gallery->getId(), \PDO::PARAM_INT);
 
         $adapter = new DoctrineORMAdapter($galleryPhotoQueryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
