@@ -10,6 +10,6 @@
 
 - import galleries - run `docker-compose exec php-fpm php bin/console bts:gallery:import`
   
-- import photos - run `docker-compose exec php-fpm php bin/console bts:gallery:photo:mport`
+- import photos - run `docker-compose exec php-fpm php bin/console bts:gallery:photo:import`
 
-- open `http://localhost` in yours browser
+- open `http://localhost` in your browser

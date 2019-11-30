@@ -32,16 +32,15 @@ class BtsGalleryPhotosImportCommand extends Command
     private $galleryRepository;
 
     public function __construct(
-        string $name = null,
         EntityManagerInterface $entityManager,
         GalleryRepository $galleryRepository
     ) {
-        parent::__construct($name);
+        parent::__construct();
         $this->entityManager = $entityManager;
         $this->galleryRepository = $galleryRepository;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this->setDescription('Imports photos links to galleries');
     }

@@ -12,7 +12,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DomCrawler\Crawler;
 
-class BtsImportGalleriesCommand extends Command
+class BtsGalleriesImportCommand extends Command
 {
     protected static $defaultName = 'bts:gallery:import';
     /**
@@ -24,13 +24,13 @@ class BtsImportGalleriesCommand extends Command
      */
     private $entityManager;
 
-    public function __construct(string $name = null, EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager)
     {
-        parent::__construct($name);
+        parent::__construct();
         $this->entityManager = $entityManager;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setDescription('Imports photo galleries from whatchthedeer.com')
