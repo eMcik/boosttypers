@@ -1,8 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Command;
 
-use App\Entity\Gallery;
+use App\Enum\WatchTheDeerURLEnum;
+use App\Transformer\LinkToGallery;
 use Doctrine\ORM\EntityManagerInterface;
 use GuzzleHttp\Client;
 use Symfony\Component\Console\Command\Command;
@@ -14,22 +17,28 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class BtsGalleriesImportCommand extends Command
 {
-    private const URL = 'http://www.watchthedeer.com/';
-
     protected static $defaultName = 'bts:gallery:import';
+
     /**
      * @var Client
      */
     private $client;
+
     /**
      * @var EntityManagerInterface
      */
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    /**
+     * @var LinkToGallery
+     */
+    private $linkToGallery;
+
+    public function __construct(EntityManagerInterface $entityManager, LinkToGallery $linkToGallery)
     {
         parent::__construct();
         $this->entityManager = $entityManager;
+        $this->linkToGallery = $linkToGallery;
     }
 
     protected function configure(): void
@@ -43,7 +52,7 @@ class BtsGalleriesImportCommand extends Command
     {
         parent::initialize($input, $output);
         $this->client = new Client([
-            'base_uri' => static::URL,
+            'base_uri' => WatchTheDeerURLEnum::URL,
             'timeout' => 2.0,
         ]);
     }
@@ -62,14 +71,8 @@ class BtsGalleriesImportCommand extends Command
             if ($x === $limit) {
                 break;
             }
-            $galleryName = str_replace(["\r", "\n", "\r\n"], '', preg_replace('/\s+/', ' ', $link->textContent));
-            $symfonyStyleInputOutput->note($galleryName);
-            $galleryUri = static::URL. str_replace(['../', 'viewer.aspx'], '', $link->getAttribute('href'));
-            $symfonyStyleInputOutput->note($galleryUri);
 
-            $gallery = new Gallery();
-            $gallery->setName($galleryName);
-            $gallery->setSourceUri($galleryUri);
+            $gallery = $this->linkToGallery->getGallery($link);
 
             $this->entityManager->persist($gallery);
         }
