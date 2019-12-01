@@ -1,0 +1,8 @@
+formatter.name: pretty
+
+suites:
+    App:
+        namespace: App
+        psr4_prefix: App
+        spec_path: '%paths.config%/src/Tests'
+        src_path: '%paths.config%/src'

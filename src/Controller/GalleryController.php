@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\Gallery;
-use App\Repository\GalleryPhotoRepository;
-use App\Repository\GalleryRepository;
-use Pagerfanta\Adapter\DoctrineORMAdapter;
-use Pagerfanta\Pagerfanta;
+use App\Pagination\GalleryPhotoPagerfanta;
+use App\Repository\GalleryRepositoryInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,19 +16,18 @@ class GalleryController extends AbstractController
 {
     /**
      * @Route("/gallery/{id}", name="gallery")
-     * @param Request                $request
-     * @param int                    $id
-     * @param GalleryRepository      $galleryRepository
-     *
-     * @param GalleryPhotoRepository $galleryPhotoRepository
+     * @param Request                    $request
+     * @param int                        $id
+     * @param GalleryRepositoryInterface $galleryRepository
+     * @param GalleryPhotoPagerfanta     $galleryPhotoPagerfanta
      *
      * @return Response
      */
     public function index(
         Request $request,
         int $id,
-        GalleryRepository $galleryRepository,
-        GalleryPhotoRepository $galleryPhotoRepository
+        GalleryRepositoryInterface $galleryRepository,
+        GalleryPhotoPagerfanta $galleryPhotoPagerfanta
     ): Response {
         $gallery = $galleryRepository->find($id);
 
@@ -38,14 +35,7 @@ class GalleryController extends AbstractController
             throw $this->createNotFoundException('Gallery not found');
         }
 
-        $galleryPhotoQueryBuilder = $galleryPhotoRepository->createQueryBuilder('gallery_photo');
-        $galleryPhotoQueryBuilder->where('gallery_photo.gallery = :gallery');
-        $galleryPhotoQueryBuilder->setParameter('gallery', $gallery->getId(), \PDO::PARAM_INT);
-
-        $adapter = new DoctrineORMAdapter($galleryPhotoQueryBuilder);
-        $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(1);
-        $pagerfanta->setCurrentPage($request->get('page', 1));
+        $pagerfanta = $galleryPhotoPagerfanta;
 
         return $this->render('gallery.html.twig', [
             'gallery' => $gallery,

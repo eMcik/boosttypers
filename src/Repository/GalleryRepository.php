@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method Gallery[]    findAll()
  * @method Gallery[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GalleryRepository extends ServiceEntityRepository
+class GalleryRepository extends ServiceEntityRepository implements GalleryRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -29,6 +29,10 @@ class GalleryRepository extends ServiceEntityRepository
 
     public function findAllSortedByPhotosCount(string $order): iterable
     {
+        if (!in_array($order, ['ASC', 'DESC'])) {
+            return $this->findAll();
+        }
+
         $qb = $this->createQueryBuilder('gallery');
         $qb->leftJoin('gallery.photos', 'photos');
         $qb->groupBy('gallery.id');

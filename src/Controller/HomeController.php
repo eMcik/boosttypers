@@ -15,22 +15,16 @@ class HomeController extends AbstractController
     /**
      * @Route("/{order}", name="home")
      * @param EntityRepository|GalleryRepository $galleryRepository
-     *
      * @param string|null                        $order
      *
      * @return Response
      */
     public function index(GalleryRepository $galleryRepository, ?string $order = ''): Response
     {
-        if (in_array(strtoupper($order), ['ASC', 'DESC'])) {
-            $galleries = $galleryRepository->findAllSortedByPhotosCount(strtoupper($order));
-        } else {
-            $galleries = $galleryRepository->findAll();
-        }
-
+        $galleries = $galleryRepository->findAllSortedByPhotosCount(strtoupper($order));
 
         return $this->render('homepage.html.twig', [
-            'galleries' => $galleries
+            'galleries' => $galleries,
         ]);
     }
 }

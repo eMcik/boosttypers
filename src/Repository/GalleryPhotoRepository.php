@@ -14,7 +14,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
  * @method GalleryPhoto[]    findAll()
  * @method GalleryPhoto[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class GalleryPhotoRepository extends ServiceEntityRepository
+class GalleryPhotoRepository extends ServiceEntityRepository implements GalleryPhotoRepositoryInterface
 {
     public function __construct(ManagerRegistry $registry)
     {
