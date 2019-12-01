@@ -35,7 +35,7 @@ class GalleryController extends AbstractController
             throw $this->createNotFoundException('Gallery not found');
         }
 
-        $pagerfanta = $galleryPhotoPagerfanta;
+        $pagerfanta = $galleryPhotoPagerfanta->getPagerfanta($gallery, (int) $request->get('page', 1));
 
         return $this->render('gallery.html.twig', [
             'gallery' => $gallery,

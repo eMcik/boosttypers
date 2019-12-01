@@ -6,6 +6,8 @@ services:
             context: docker/php-fpm
         volumes:
             - ./:/var/www
+        links:
+            - database
     nginx:
         build:
             context: docker/nginx
@@ -32,3 +34,7 @@ services:
             - MYSQL_USER=boost
             - MYSQL_PASSWORD=typers
             - MYSQL_ROOT_PASSWORD=typers2
+
+networks:
+    default:
+        driver: bridge

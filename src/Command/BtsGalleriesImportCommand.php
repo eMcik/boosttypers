@@ -53,7 +53,7 @@ class BtsGalleriesImportCommand extends Command
         parent::initialize($input, $output);
         $this->client = new Client([
             'base_uri' => WatchTheDeerURLEnum::URL,
-            'timeout' => 2.0,
+            'timeout' => 5.0,
         ]);
     }
 

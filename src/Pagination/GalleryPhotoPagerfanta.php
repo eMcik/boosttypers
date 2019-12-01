@@ -3,6 +3,7 @@
 namespace App\Pagination;
 
 use App\Entity\Gallery;
+use App\Repository\GalleryPhotoRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\Pagerfanta;
@@ -11,11 +12,11 @@ use PDO;
 class GalleryPhotoPagerfanta
 {
     /**
-     * @var EntityRepository
+     * @var EntityRepository|GalleryPhotoRepositoryInterface
      */
     private $galleryPhotoRepository;
 
-    public function __construct(EntityRepository $galleryPhotoRepository)
+    public function __construct(GalleryPhotoRepositoryInterface $galleryPhotoRepository)
     {
         $this->galleryPhotoRepository = $galleryPhotoRepository;
     }
