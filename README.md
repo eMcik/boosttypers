@@ -2,6 +2,18 @@
 
 ## How to start
 
+### Install Docker
+  
+- On MacOSX: https://docs.docker.com/docker-for-mac/)
+
+- On Linux: https://docs.docker.com/install/linux/docker-ce/ubuntu/
+
+### Install Docker compose
+
+- https://docs.docker.com/compose/install/
+
+### Run commands
+
 - run `docker run --rm --interactive --tty --user $(id -u):$(id -g) --volume $PWD:/app --volume /tmp:/tmp composer install`
 
 - run `docker-compose up -d`
@@ -12,4 +24,6 @@
   
 - import photos - run `docker-compose exec php-fpm php bin/console bts:gallery:photo:import`
 
-- open `http://localhost` in your browser
+- or just run `./install.sh`
+
+Open `http://localhost` in your browser
