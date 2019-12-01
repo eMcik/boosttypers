@@ -158,6 +158,24 @@
     "pagerfanta/pagerfanta": {
         "version": "v2.1.3"
     },
+    "phpdocumentor/reflection-common": {
+        "version": "2.0.0"
+    },
+    "phpdocumentor/reflection-docblock": {
+        "version": "4.3.2"
+    },
+    "phpdocumentor/type-resolver": {
+        "version": "1.0.1"
+    },
+    "phpspec/php-diff": {
+        "version": "v1.1.0"
+    },
+    "phpspec/phpspec": {
+        "version": "6.1.0"
+    },
+    "phpspec/prophecy": {
+        "version": "1.9.0"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -172,6 +190,18 @@
     },
     "ralouphie/getallheaders": {
         "version": "3.0.3"
+    },
+    "sebastian/comparator": {
+        "version": "3.0.2"
+    },
+    "sebastian/diff": {
+        "version": "3.0.2"
+    },
+    "sebastian/exporter": {
+        "version": "3.1.2"
+    },
+    "sebastian/recursion-context": {
+        "version": "3.0.0"
     },
     "symfony/asset": {
         "version": "v4.4.0"
@@ -300,6 +330,9 @@
     "symfony/polyfill-php73": {
         "version": "v1.13.0"
     },
+    "symfony/process": {
+        "version": "v4.4.0"
+    },
     "symfony/property-access": {
         "version": "v4.4.0"
     },
@@ -386,6 +419,9 @@
     },
     "twig/twig": {
         "version": "v3.0.0"
+    },
+    "webmozart/assert": {
+        "version": "1.6.0"
     },
     "white-october/pagerfanta-bundle": {
         "version": "v1.3.1"
