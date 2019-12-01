@@ -24,6 +24,6 @@
   
 - import photos - run `docker-compose exec php-fpm php bin/console bts:gallery:photo:import`
 
-- or just run `./install.sh`
+- or just run the script `./install.sh`
 
 Open `http://localhost` in your browser

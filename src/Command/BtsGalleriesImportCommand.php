@@ -14,6 +14,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class BtsGalleriesImportCommand extends Command
 {
+    private const URL = 'http://www.watchthedeer.com/';
+
     protected static $defaultName = 'bts:gallery:import';
     /**
      * @var Client
@@ -41,14 +43,14 @@ class BtsGalleriesImportCommand extends Command
     {
         parent::initialize($input, $output);
         $this->client = new Client([
-            'base_uri' => 'http://www.watchthedeer.com',
+            'base_uri' => static::URL,
             'timeout' => 2.0,
         ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyleInputOutput = new SymfonyStyle($input, $output);
         $limit = (int)$input->getArgument('limit');
 
         $response = $this->client->get('/photos');
@@ -61,9 +63,9 @@ class BtsGalleriesImportCommand extends Command
                 break;
             }
             $galleryName = str_replace(["\r", "\n", "\r\n"], '', preg_replace('/\s+/', ' ', $link->textContent));
-            $io->note($galleryName);
-            $galleryUri = 'http://www.watchthedeer.com/'. str_replace(['../', 'viewer.aspx'], '', $link->getAttribute('href'));
-            $io->note($galleryUri);
+            $symfonyStyleInputOutput->note($galleryName);
+            $galleryUri = static::URL. str_replace(['../', 'viewer.aspx'], '', $link->getAttribute('href'));
+            $symfonyStyleInputOutput->note($galleryUri);
 
             $gallery = new Gallery();
             $gallery->setName($galleryName);

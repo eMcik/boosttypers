@@ -14,6 +14,8 @@ use Symfony\Component\DomCrawler\Crawler;
 
 class BtsGalleryPhotosImportCommand extends Command
 {
+    private const URL = 'http://www.watchthedeer.com';
+
     protected static $defaultName = 'bts:gallery:photos:import';
 
     /**
@@ -49,19 +51,19 @@ class BtsGalleryPhotosImportCommand extends Command
     {
         parent::initialize($input, $output);
         $this->client = new Client([
-            'base_uri' => 'http://www.watchthedeer.com',
+            'base_uri' => static::URL,
             'timeout' => 10.0,
         ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $io = new SymfonyStyle($input, $output);
+        $symfonyStyleInputOutput = new SymfonyStyle($input, $output);
 
         $galleries = $this->galleryRepository->findAll();
 
         foreach ($galleries as $gallery) {
-            $io->note('Trying to import photos to `'.$gallery->getName().'` gallery');
+            $symfonyStyleInputOutput->note('Trying to import photos to `'.$gallery->getName().'` gallery');
             $response = $this->client->get(str_replace('http://www.watchthedeer.com', '', $gallery->getSourceUri()).'viewer.aspx');
             $html = $response->getBody()->getContents();
             $crawler = new Crawler($html);
